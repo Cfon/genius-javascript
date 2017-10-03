@@ -1,0 +1,99 @@
+Ок погнали! 
+Первое что я хотел бы описать средства для разработки кода на JavaScript в Windows:
+* Редактор Nodepad++
+* Броузер Google Chrome 
+* Контроль версий кода Git
+* Среда Node.js
+* Менежер пакетов Node npm
+* Инструмент для сборки Gulp 
+* Транскомпилятор Babel 
+* Анализатор кода ESLint
+
+теперь все это надо установить, первые 5 пунктов не требует объяснения просто скачаете и инсталируете, последние 3 это пакеты Node.
+далее что касается Git, то юзаем эмулятор консоли bash (Git Bash), как в Linux.
+
+с его помошью создаем структуру папок нашего тестового проекта, назовем его GenuisJavaScript
+пишем в консоле:
+$ mkdir GenuisJavaScript
+жмем <Enter>
+создаем структуру папок 
+$ mkdir GenuisJavaScript/build
+$ mkdir GenuisJavaScript/src
+$ mkdir GenuisJavaScript/src/js
+
+теперь подключаем наш проект к Git
+$ git init
+будет создана скрытая папка .git с нужными файлами.
+далее создаем файл .gitignore, упс! в Windows нельзя создать файл начинающийся с точки, чтобы его создать надо назвать его .gitignore.
+с точкой в конце, тогда будет все пучком.
+в .gitignore указываем названия файлов и/или маски типа *.log, которые будут игнорироваться Git.
+для работы с Git потребуется несколько команд такие как 
+$ git status
+проверить состояние 
+$ git add <название файла>
+добавить изменения 
+$ git commit -m "<комментарий>"
+подвердить изменения
+
+оставим Git и установим пакеты Node, используя консоль bash и менеджер пакетов Node npm.
+$ npm init
+создаем файл package.json (отвечаем на вопросы, просто жмем <Enter>)
+$ npm install -g gulp
+ставим gulp установим его в глобальную папку (-g), по умолчанию она имеет вид "C:\Users\<имя пользователя>\AppData\Roaming\npm\node_modules\gulp"
+$ npm install --save-dev gulp
+ставим gulp локально в папке GenuisJavaScript нашего тестового проекта
+--save-dev означает создать зависимость devDependencies в файле package.json
+создаем файл gulpfile.js:
+
+const gulp = require("gulp");
+gulp.task("default", function(){
+  // для теста 
+  // копируем файлы *.js из папки src/js в папку build/es5/js
+	gulp.src("src/js/**/*.js").pipe(gulp.dest("build/es5/js"));
+	console.log("Complete.");
+});
+
+тестируем gulp
+$ gulp
+если все ок, то файлы *.js скопируются из папки src/js в папку build/es5/js
+
+далее ставим babel и gulp-babel
+$ npm install --save-dev babel-preset-es2015 
+$ npm install --save-dev babel-core
+$ npm install --save-dev gulp-babel
+
+создаем файл .babelrc:
+{ "presets": ["es2015"] }
+
+изменяем файл gulpfile.js:
+const gulp = require("gulp"),
+	  babel = require("gulp-babel");
+
+gulp.task("default", function(){
+	gulp.src("src/js/**/*.js").pipe(babel()).pipe(gulp.dest("build/es5/js"));
+	console.log("Complete.");
+});
+
+создаем тестовый файл test.js и сохраняем его в папке src/js
+пишем туда код в стандарте ES6, например:
+'use strict';
+// const объявления 
+const sentences = [
+	{ subject: 'JavaScript', verb: 'is', object: 'great' },
+	{ subject: 'Elephants', verb: 'are', object: 'large' },
+];
+// деструктуризация объекта
+function say({ subject, verb, object }) {
+	// строка шаблона
+	console.log (`${subject} ${verb} ${object}`);
+}
+// цикл for..of
+for (let s of sentences) {
+	say(s);
+} 
+
+тестируем babel и gulp-babel
+$ gulp
+
+В итоге папке build/es5/js будет создан файл test.js с транслированым кодом ES5.
+ВСЕ! 
