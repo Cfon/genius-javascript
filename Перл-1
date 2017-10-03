@@ -96,4 +96,4 @@ for (let s of sentences) {
 $ gulp
 
 В итоге папке build/es5/js будет создан файл test.js с транслированым кодом ES5.
-ВСЕ! 
+ВСЕ! ^^
