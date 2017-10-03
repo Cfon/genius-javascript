@@ -12,7 +12,9 @@
 далее что касается Git, юзаем эмулятор консоли bash (Git Bash), как в Linux.
 с его помошью создаем структуру папок нашего тестового проекта, назовем его GenuisJavaScript
 пишем в консоле:
+```bash
 $ mkdir GenuisJavaScript
+```
 жмем <Enter>
 создаем структуру папок 
 $ mkdir GenuisJavaScript/build
