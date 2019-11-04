@@ -1,4 +1,4 @@
-# ImGeniusJavaScript
+# GeniusJavaScript
 Записки гения 
 
 Здравствуйте! Я Гена! Можно просто Гений! )))
