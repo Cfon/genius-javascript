@@ -1,2 +1,3 @@
-# GeniusJavaScript
+# Genius JavaScript
 
+## Tips
